@@ -145,7 +145,6 @@ class CreatePicture():
         background.paste(txt, txt_offset)
         background.paste(grid, grid_offset)
         if mode == 'show':
-            print(type(background))
             background.show(title=self.name)
         else:
             background.save(self.name, format='JPEG')
@@ -179,5 +178,4 @@ if len(sys.argv) > 1:
         hexcode = sys.argv[2] if savePos != 2 else '#ffffe4'
     self = CreatePicture(name, hexcode)
     mode = 'save' if savePos != 0 else 'show'
-    print(mode)
     self.createImage(mode=mode)
