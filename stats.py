@@ -1,4 +1,5 @@
 from imdb import IMDb
+import imdb
 from PIL import Image, ImageDraw, ImageColor, ImageFont
 import requests
 from io import BytesIO
@@ -19,10 +20,18 @@ class CreatePicture():
             self.rgb = ImageColor.getrgb('#ffffe4')
 
     def getMovieByID(self, movieID):
-        return self.ia.get_movie(movieID)
+        try:
+            return self.ia.get_movie(movieID)
+        except IndexError:
+
+            print("This movie does not exist.")
+            raise RuntimeError
 
     def getMovieIDFromName(self, movieName):
-        return self.ia.search_movie(movieName)[0].movieID
+        try:
+            return self.ia.search_movie(movieName)[0].movieID
+        except IndexError:
+            print("This movie does not exist.")
 
     def episodes(self, ID):
         try:
@@ -49,7 +58,12 @@ class CreatePicture():
                     x[season] = dictionary
                 return x
         except KeyError as e:
-            print('Please enter a series.')
+            print('Please enter a valid series.')
+            return None
+        except TypeError as e:
+            print('Please enter a valid series.')
+            return None
+        except imdb._exceptions.IMDbDataAccessError:
             return None
 
     def getImage(self, ID):
@@ -112,6 +126,7 @@ class CreatePicture():
             grid.paste(image, offset)
 
             for j, rating in enumerate(episodes.values()):
+                rating = rating if rating < 10.1 else 0
                 if i == maxIndex:
                     offset = 0, (j + 1) * H
                     rgb = (169, 169, 169)
@@ -125,6 +140,7 @@ class CreatePicture():
 
                 text = str(rating)
                 offset = (i + 1) * W, (j + 1) * H
+
                 hexVal = cRange[100 - int(rating * 10) - 1]
                 rgb = ImageColor.getrgb(str(hexVal.hex_l))
                 image = Image.new(mode='RGB', size=boxSize, color=rgb)
@@ -172,10 +188,11 @@ if len(sys.argv) > 1:
         print('         or a basic colour also in quotes')
         print('         -If you want to save the photo to the directory that the python file is saved')
         print('         use --save at the end of the argument')
-    if len(sys.argv) > 2:
-        if '--save' in str(sys.argv):
-            savePos = 2 if len(sys.argv) < 4 else 3
-        hexcode = sys.argv[2] if savePos != 2 else '#ffffe4'
-    self = CreatePicture(name, hexcode)
-    mode = 'save' if savePos != 0 else 'show'
-    self.createImage(mode=mode)
+    else:
+        if len(sys.argv) > 2:
+            if '--save' in str(sys.argv):
+                savePos = 2 if len(sys.argv) < 4 else 3
+            hexcode = sys.argv[2] if savePos != 2 else '#ffffe4'
+        self = CreatePicture(name, hexcode)
+        mode = 'save' if savePos != 0 else 'show'
+        self.createImage(mode=mode)
