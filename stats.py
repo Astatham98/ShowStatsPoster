@@ -145,7 +145,8 @@ class CreatePicture():
         background.paste(txt, txt_offset)
         background.paste(grid, grid_offset)
         if mode == 'show':
-            background.show()
+            print(type(background))
+            background.show(title=self.name)
         else:
             background.save(self.name, format='JPEG')
 
@@ -164,6 +165,7 @@ class CreatePicture():
 if len(sys.argv) > 1:
     name = str(sys.argv[1])
     savePos = 0
+    hexcode = '#ffffe4'
     mode = 'show'
     if name == '--help':
         print('         -type the name of the show you want in quotes ("")')
@@ -171,9 +173,11 @@ if len(sys.argv) > 1:
         print('         or a basic colour also in quotes')
         print('         -If you want to save the photo to the directory that the python file is saved')
         print('         use --save at the end of the argument')
-    elif '--save' in str(sys.argv):
-        savePos = 2 if len(sys.argv) < 4 else 3
-    hexcode = sys.argv[2] if savePos != 2 else '#ffffe4'
+    if len(sys.argv) > 2:
+        if '--save' in str(sys.argv):
+            savePos = 2 if len(sys.argv) < 4 else 3
+        hexcode = sys.argv[2] if savePos != 2 else '#ffffe4'
     self = CreatePicture(name, hexcode)
     mode = 'save' if savePos != 0 else 'show'
+    print(mode)
     self.createImage(mode=mode)

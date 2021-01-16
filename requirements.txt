@@ -1,0 +1,4 @@
+requests==2.22.0
+colour==0.1.5
+IMDbPY==2020.9.25
+Pillow==8.1.0
