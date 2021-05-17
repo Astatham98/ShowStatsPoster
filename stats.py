@@ -58,10 +58,10 @@ class CreatePicture():
                     x[season] = dictionary
                 return x
         except KeyError as e:
-            print('Please enter a valid series.')
+            print('Please enter a valid series 1.')
             return None
         except TypeError as e:
-            print('Please enter a valid series.')
+            print('Please enter a valid series 2.')
             return None
         except imdb._exceptions.IMDbDataAccessError:
             return None
@@ -141,7 +141,7 @@ class CreatePicture():
                 text = str(rating)
                 offset = (i + 1) * W, (j + 1) * H
 
-                hexVal = cRange[100 - int(rating * 10) - 1]
+                hexVal = cRange[100 - int(rating * 10) - 1] if rating != 10.0 else cRange[0]
                 rgb = ImageColor.getrgb(str(hexVal.hex_l))
                 image = Image.new(mode='RGB', size=boxSize, color=rgb)
 
@@ -163,9 +163,9 @@ class CreatePicture():
         if mode == 'show':
             background.show(title=self.name)
         else:
-            background.save(self.name, format='JPEG')
+            background.save(self.name + '.png', format='png')
 
-    def createImage(self, mode):
+    def createImage(self, mode='save'):
         ID = self.getMovieIDFromName(self.name)
         ratings = self.episodes(ID)
         if ratings is not None:
