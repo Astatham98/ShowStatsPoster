@@ -59,7 +59,7 @@ class CreatePicture():
                 return x
         except KeyError as e:
             print('Please enter a valid series 1.')
-            return None
+            raise
         except TypeError as e:
             print('Please enter a valid series 2.')
             return None
