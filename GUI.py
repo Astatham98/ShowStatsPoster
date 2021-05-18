@@ -143,10 +143,13 @@ class UI_MainWindow(QMainWindow):
         self.clearExceptions()
         
         if text != '':
-            picture = CreatePicture(text, colour)
-            picture.createImage()
-            self.updatePhoto(text)
-            self.currentShow = text
+            try:
+                picture = CreatePicture(text, colour)
+                picture.createImage()
+                self.updatePhoto(text)
+                self.currentShow = text
+            except KeyError:
+                self.updateErrorLabel('Enter a valid series (Movie dont work)')
         else:
             self.updateErrorLabel('Enter a valid series')
     
