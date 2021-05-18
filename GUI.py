@@ -114,7 +114,7 @@ class UI_MainWindow(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Series rating generator."))
         self.saveButton.setText(_translate("MainWindow", "Save"))
         self.newButton.setText(_translate("MainWindow", "New"))
         self.title.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -149,7 +149,7 @@ class UI_MainWindow(QMainWindow):
                 self.updatePhoto(text)
                 self.currentShow = text
             except KeyError:
-                self.updateErrorLabel('Enter a valid series (Movie dont work)')
+                self.updateErrorLabel('Enter a valid series (Movies dont work)')
         else:
             self.updateErrorLabel('Enter a valid series')
     
