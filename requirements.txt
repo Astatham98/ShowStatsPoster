@@ -8,7 +8,7 @@ greenlet==1.1.0
 idna==2.8
 IMDbPY==2021.4.18
 lxml==4.6.3
-Pillow==8.3.2
+Pillow==9.0.0
 pipreqs==0.4.10
 PyQt5==5.15.4
 pyqt5-plugins==5.15.4.2.1.0
