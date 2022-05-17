@@ -1,0 +1,6 @@
+
+.idea/workspace.xml
+.vscode/settings.json
+*.pyc
+*.png
+/venv
